@@ -11,11 +11,14 @@
 
 <script>
 import Header from "./components/Header.vue";
-
 export default {
   name: "App",
   components: {
     "my-header": Header,
+  },
+  created() {
+    this.$store.dispatch("getMovies");
+    this.$store.dispatch("tryAutoLogin");
   },
 };
 </script>

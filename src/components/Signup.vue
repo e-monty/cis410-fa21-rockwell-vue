@@ -25,7 +25,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="email-input" class="form-label">E-mail</label
+        <label for="email-input" class="form-label">Email</label
         ><input
           type="email"
           class="form-control"
@@ -35,7 +35,7 @@
           v-model="email"
         />
         <small v-if="dupEmail" class="text-danger"
-          >Please choose a different email</small
+          >Please chose a different email</small
         >
       </div>
       <div class="mb-3">
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      // console.log("form submitted");
+      //  console.log("form submiited");
       const myFormData = {
         nameFirst: this.nameFirst,
         nameLast: this.nameLast,

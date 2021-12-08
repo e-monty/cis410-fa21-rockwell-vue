@@ -2,12 +2,12 @@
   <div>
     <h1>Login</h1>
     <div v-if="this.$route.query.signupsuccess" class="alert alert-success">
-      Thanks for signing up, please log in now.
+      Thanks for signin up, please log in now.
     </div>
 
     <form @submit.prevent="onSubmit">
       <div class="mb-3">
-        <label for="email-input" class="form-label">Email</label
+        <label for="email-input" class="form-label">Password</label
         ><input
           type="email"
           class="form-control"
@@ -43,7 +43,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -53,28 +52,28 @@ export default {
       credentialsError: false,
     };
   },
-
   methods: {
     onSubmit() {
       let myFormData = {
         email: this.email,
         password: this.password,
       };
-
-      // console.log("form data", myFormData);
-
+      // console.log("the forma data", myFormData);
       axios
         .post("/contacts/login", myFormData)
         .then((myResponse) => {
-          // console.log("response", myResponse);
-
+          // console.log("the response", myResponse);
           this.$store.commit("storeTokenInApp", myResponse.data.token);
           this.$store.commit("storeUserInApp", myResponse.data.user);
+          localStorage.setItem("token", myResponse.data.token);
+          let now = new Date();
+          let expirationDate = new Date(now.getTime() + 60 * 60 * 1000);
+          localStorage.setItem("expiration", expirationDate);
+          this.$store.dispatch("setLogoutTimer");
           this.$router.replace("/account");
         })
         .catch((myError) => {
           console.log("error in /contacts/login", myError);
-
           if (myError.response.status == 401) {
             this.credentialsError = true;
           } else {
